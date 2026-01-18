@@ -14,6 +14,25 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            
+            // --- UPDATE KECEPATAN DISINI ---
+            animation: {
+                // Saya ubah dari 40s menjadi 80s agar lebih lambat
+                'scroll-left': 'scroll-left 80s linear infinite',
+                'scroll-right': 'scroll-right 80s linear infinite',
+            },
+            
+            keyframes: {
+                'scroll-left': {
+                    '0%': { transform: 'translateX(0)' },
+                    '100%': { transform: 'translateX(-50%)' }, 
+                },
+                'scroll-right': {
+                    '0%': { transform: 'translateX(-50%)' },
+                    '100%': { transform: 'translateX(0)' },
+                },
+            },
+            // -------------------------------
         },
     },
 

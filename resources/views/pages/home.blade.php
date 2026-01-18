@@ -426,57 +426,67 @@
             </div>
         </div>
 
-{{-- 9. CLIENT TRUST SECTION (FIXED: START DARI TENGAH) --}}
-    <div class="bg-[#F9FAFB] py-24 border-y border-gray-200 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/50 to-transparent pointer-events-none"></div>
+{{-- 9. CLIENT TRUST SECTION (REVISI: FULL COLOR, NO PAUSE, SLOW) --}}
+<div class="bg-[#F9FAFB] py-24 border-y border-gray-200 relative overflow-hidden">
+    {{-- Gradient Overlay tetap dipertahankan untuk estetika pudar di pinggir --}}
+    <div class="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#F9FAFB] to-transparent z-10 pointer-events-none"></div>
+    <div class="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#F9FAFB] to-transparent z-10 pointer-events-none"></div>
 
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <span class="text-[#F7941D] font-bold tracking-widest uppercase text-sm mb-3 block">
-                    They Trust Us
-                </span>
-                <h2 class="text-4xl md:text-5xl font-extrabold text-[#001D5E]">
-                    Trusted by Great Brands
-                </h2>
-                <p class="mt-4 text-gray-500">Kolaborasi dengan klien terkemuka untuk acara bersejarah.</p>
-            </div>
+    <div class="relative z-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <span class="text-[#F7941D] font-bold tracking-widest uppercase text-sm mb-3 block">
+                They Trust Us
+            </span>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-[#001D5E]">
+                Trusted by Great Brands
+            </h2>
+            <p class="mt-4 text-gray-500">Kolaborasi dengan klien terkemuka untuk acara bersejarah.</p>
+        </div>
+
+        {{-- CONTAINER LOGO --}}
+        <div class="flex flex-col gap-10 overflow-hidden">
             
-            <div class="relative w-full overflow-hidden" 
-                 style="mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);">
-                
-                {{-- BARIS 1 --}}
-                <div class="flex mb-12">
-                    <div class="flex gap-16 md:gap-24 animate-scroll-left w-max items-center">
-                        @for ($i = 0; $i < 12; $i++) 
-                            @foreach($clients as $client)
-                                <div class="flex-shrink-0 w-32 md:w-48 flex justify-center items-center group">
-                                    <img src="{{ $client->logo }}" 
-                                         class="h-12 md:h-20 w-auto object-contain hover:scale-110 transition-transform duration-300 cursor-pointer drop-shadow-sm" 
-                                         alt="{{ $client->name }}">
-                                </div>
-                            @endforeach
-                        @endfor
-                    </div>
-                </div>
+            {{-- CATATAN MENTOR: 
+                 Tag <style> untuk .hover-pause SUDAH DIHAPUS disini.
+                 Sehingga saat kena kursor, dia tidak akan berhenti.
+            --}}
 
-                {{-- BARIS 2 --}}
-                <div class="flex">
-                    <div class="flex gap-16 md:gap-24 animate-scroll-right w-max items-center">
-                        @for ($i = 0; $i < 12; $i++) 
-                            @foreach($clients->reverse() as $client)
-                                <div class="flex-shrink-0 w-32 md:w-48 flex justify-center items-center group">
-                                    <img src="{{ $client->logo }}" 
-                                         class="h-12 md:h-20 w-auto object-contain hover:scale-110 transition-transform duration-300 cursor-pointer drop-shadow-sm" 
-                                         alt="{{ $client->name }}">
-                                </div>
-                            @endforeach
-                        @endfor
-                    </div>
-                </div>
-
+            {{-- BARIS 1: Bergerak ke KIRI --}}
+            {{-- Class 'hover-pause' juga sudah dihapus dari div ini --}}
+            <div class="flex animate-scroll-left w-max gap-16 md:gap-24 items-center">
+                @for ($i = 0; $i < 20; $i++) 
+                    @foreach($clients as $client)
+                        {{-- 
+                            REVISI WARNA:
+                            Class 'grayscale', 'opacity-70', dan 'hover:...' SUDAH DIHAPUS.
+                            Sekarang logo tampil dengan warna aslinya.
+                        --}}
+                        <div class="flex-shrink-0 w-32 md:w-48 flex justify-center items-center">
+                            <img src="{{ $client->logo }}" 
+                                 class="h-12 md:h-16 w-auto object-contain hover:scale-110 transition-transform duration-300 cursor-pointer" 
+                                 alt="{{ $client->name }}">
+                        </div>
+                    @endforeach
+                @endfor
             </div>
+
+            {{-- BARIS 2: Bergerak ke KANAN --}}
+            <div class="flex animate-scroll-right w-max gap-16 md:gap-24 items-center">
+                @for ($i = 0; $i < 20; $i++) 
+                    @foreach($clients->reverse() as $client)
+                        {{-- REVISI WARNA: Class grayscale dan opacity dihapus --}}
+                        <div class="flex-shrink-0 w-32 md:w-48 flex justify-center items-center">
+                            <img src="{{ $client->logo }}" 
+                                 class="h-12 md:h-16 w-auto object-contain hover:scale-110 transition-transform duration-300 cursor-pointer" 
+                                 alt="{{ $client->name }}">
+                        </div>
+                    @endforeach
+                @endfor
+            </div>
+
         </div>
     </div>
+</div>
 
     {{-- 6. OUR GOALS SECTION --}}
     <div class="bg-[#001D5E] py-24 relative overflow-hidden">
