@@ -1,49 +1,65 @@
-<footer class="bg-[#001D5E] text-blue-200 py-16 border-t border-blue-900">
+<footer class="bg-[#001D5E] text-white pt-16 pb-8 border-t border-blue-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
-            <div class="col-span-1 md:col-span-1">
-                 <a href="{{ route('home') }}" class="flex items-center gap-2 mb-6 cursor-pointer">
-                   <div class="w-8 h-8 bg-[#F7941D] rounded-lg flex items-center justify-center font-bold text-xl text-white">S</div>
-                   <span class="font-semibold text-xl text-white tracking-tight">Stukka Events</span>
-               </a>
-               <p class="text-sm leading-relaxed text-blue-300">
-                Partner terbaik untuk mewujudkan setiap detik momen berharga Anda. Professional, Creative, & Memorable.
-               </p>
-            </div>
+        
+        {{-- Grid 4 Kolom --}}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
             
+            {{-- Kolom 1: Brand & Tagline --}}
             <div>
-              <h4 class="text-white font-bold mb-6">Services</h4>
-              <ul class="space-y-3 text-sm">
-                <li><a href="{{ route('services') }}" class="hover:text-[#F7941D] transition-colors">Wedding Planning</a></li>
-                <li><a href="{{ route('services') }}" class="hover:text-[#F7941D] transition-colors">Corporate Events</a></li>
-                <li><a href="{{ route('services') }}" class="hover:text-[#F7941D] transition-colors">Birthday Party</a></li>
-                <li><a href="{{ route('services') }}" class="hover:text-[#F7941D] transition-colors">Music Festival</a></li>
-              </ul>
+                {{-- Logo Stukka (Sesuaikan path gambarnya) --}}
+                <div class="mb-6">
+                    {{-- Jika pakai Gambar --}}
+                    {{-- <img src="{{ asset('images/logo-white.png') }}" alt="Stukka Logo" class="h-10"> --}}
+                    
+                    {{-- Jika pakai Teks (Sesuai Gambar) --}}
+                    <h2 class="text-4xl font-black tracking-widest uppercase">
+                        STU<span class="text-[#F7941D]">K</span><span class="text-blue-400">K</span>A
+                    </h2>
+                </div>
+                <p class="text-blue-200 text-sm leading-relaxed">
+                    Partner terbaik untuk mewujudkan setiap detik momen berharga Anda. Professional, Creative, & Memorable.
+                </p>
             </div>
 
+            {{-- Kolom 2: Services --}}
             <div>
-              <h4 class="text-white font-bold mb-6">Company</h4>
-              <ul class="space-y-3 text-sm">
-                <li><a href="{{ route('portfolio') }}" class="hover:text-[#F7941D] transition-colors">About Us</a></li>
-                <li><a href="{{ route('portfolio') }}" class="hover:text-[#F7941D] transition-colors">Our Team</a></li>
-                <li><a href="{{ route('portfolio') }}" class="hover:text-[#F7941D] transition-colors">Careers</a></li>
-                <li><a href="{{ route('portfolio') }}" class="hover:text-[#F7941D] transition-colors">Contact</a></li>
-              </ul>
+                <h4 class="text-lg font-bold mb-6 text-white">Services</h4>
+                <ul class="space-y-4 text-blue-200 text-sm">
+                    <li><a href="#" class="hover:text-[#F7941D] transition-colors">Wedding Planning</a></li>
+                    <li><a href="#" class="hover:text-[#F7941D] transition-colors">Corporate Events</a></li>
+                    <li><a href="#" class="hover:text-[#F7941D] transition-colors">Birthday Party</a></li>
+                    <li><a href="#" class="hover:text-[#F7941D] transition-colors">Music Festival</a></li>
+                </ul>
             </div>
 
+            {{-- Kolom 3: Company --}}
             <div>
-              <h4 class="text-white font-bold mb-6">Connect</h4>
-              <ul class="space-y-3 text-sm">
-                <li><a href="#" onclick="alert('Simulasi: Instagram')" class="hover:text-[#F7941D] transition-colors">Instagram</a></li>
-                <li><a href="#" onclick="alert('Simulasi: TikTok')" class="hover:text-[#F7941D] transition-colors">TikTok</a></li>
-                <li><a href="#" onclick="alert('Simulasi: LinkedIn')" class="hover:text-[#F7941D] transition-colors">LinkedIn</a></li>
-                <li><a href="#" onclick="alert('Simulasi: WhatsApp')" class="hover:text-[#F7941D] transition-colors">WhatsApp</a></li>
-              </ul>
+                <h4 class="text-lg font-bold mb-6 text-white">Company</h4>
+                <ul class="space-y-4 text-blue-200 text-sm">
+                    <li><a href="#" class="hover:text-[#F7941D] transition-colors">About Us</a></li>
+                    <li><a href="#" class="hover:text-[#F7941D] transition-colors">Our Team</a></li>
+                    <li><a href="#" class="hover:text-[#F7941D] transition-colors">Careers</a></li>
+                    <li><a href="#" class="hover:text-[#F7941D] transition-colors">Contact</a></li>
+                </ul>
+            </div>
+
+            {{-- Kolom 4: Connect --}}
+            <div>
+                <h4 class="text-lg font-bold mb-6 text-white">Connect</h4>
+                <ul class="space-y-4 text-blue-200 text-sm">
+                    <li><a href="#" class="hover:text-[#F7941D] transition-colors">Instagram</a></li>
+                    <li><a href="#" class="hover:text-[#F7941D] transition-colors">TikTok</a></li>
+                    <li><a href="#" class="hover:text-[#F7941D] transition-colors">LinkedIn</a></li>
+                    <li><a href="#" class="hover:text-[#F7941D] transition-colors">WhatsApp</a></li>
+                </ul>
             </div>
         </div>
 
-        <div class="border-t border-blue-900 mt-12 pt-8 text-center text-sm text-blue-400">
-          &copy; {{ date('Y') }} Stukka Events. All rights reserved. Dibuat oleh AI.
+        {{-- Bottom: Copyright & Marco --}}
+        <div class="border-t border-blue-800/50 pt-8 text-center">
+            <p class="text-blue-300 text-sm">
+                &copy; 2026 Stukka Events. All rights reserved. Dibuat oleh Marco.
+            </p>
         </div>
-      </div>
+    </div>
 </footer>

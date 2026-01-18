@@ -31,11 +31,24 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
             <div class="col-span-1 md:col-span-1">
                  <a href="{{ route('home') }}" class="flex items-center gap-2 mb-6 cursor-pointer">
-                   <div class="w-8 h-8 bg-[#F7941D] rounded-lg flex items-center justify-center font-bold text-xl text-white">S</div>
-                   <span class="font-semibold text-xl text-white tracking-tight">Stukka Events</span>
+                   <img src="{{ asset('images/Stukka1.png') }}" 
+                     alt="Stukka Events" 
+                     class="h-12 w-auto object-contain">
                </a>
                <p class="text-sm leading-relaxed text-blue-300">
-                Partner terbaik untuk mewujudkan setiap detik momen berharga Anda. Professional, Creative, & Memorable.
+                PT. Stukka Digital Creative
+               </p>
+                <p class="text-sm leading-relaxed text-blue-300">
+                Jl. Z No.16
+               </p>
+                <p class="text-sm leading-relaxed text-blue-300">
+                Jakarta, Indonesia
+               </p>
+                <p class="text-sm leading-relaxed text-blue-300">
+                +62 878-7810-2822
+               </p>
+                <p class="text-sm leading-relaxed text-blue-300">
+                (WhatsApp)
                </p>
             </div>
             

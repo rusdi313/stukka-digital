@@ -4,8 +4,9 @@
             
             {{-- LOGO --}}
             <a href="{{ route('home') }}" class="flex items-center gap-2 cursor-pointer">
-                <div class="w-8 h-8 bg-[#F7941D] rounded-lg flex items-center justify-center font-bold text-xl text-white">S</div>
-                <span class="font-semibold text-xl tracking-tight">Stukka Events</span>
+                <img src="{{ asset('images/LOGO_KK.png') }}" 
+                     alt="Stukka Events" 
+                     class="h-12 w-auto object-contain">
             </a>
 
             {{-- DESKTOP MENU --}}
