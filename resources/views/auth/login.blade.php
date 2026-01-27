@@ -80,6 +80,10 @@
                         </div>
                     </div>
 
+                    <input type="hidden" name="redirect" value="{{ request('redirect') }}">
+                    <input type="hidden" name="date" value="{{ request('date') }}">
+
+
                     <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-full shadow-lg text-sm font-bold text-white bg-[#001D5E] hover:bg-blue-900 transition-all hover:scale-[1.02] transform">
                         Masuk Dashboard
                     </button>

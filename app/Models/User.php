@@ -45,4 +45,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function isAdmin(): bool
+    {
+        return $this->usertype === 'admin';
+    }
+
+    public function isUser(): bool
+    {
+        return $this->usertype === 'user';
+    }
 }

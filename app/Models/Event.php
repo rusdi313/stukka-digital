@@ -23,5 +23,6 @@ class Event extends Model
         'doc2',  // Foto Dok 2
         'doc3',  // Foto Dok 3
         'description',
+        'is_featured',
     ];
 }

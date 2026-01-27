@@ -385,6 +385,109 @@
         </div>
     </div>
 
+    {{-- 5.5 FEATURED PROJECTS SECTION --}}
+    @if(isset($featuredEvents) && $featuredEvents->count())
+        <div class="bg-white py-24 border-t border-gray-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+                    <div class="max-w-2xl">
+                        <span class="text-[#F7941D] font-bold tracking-widest uppercase text-sm mb-3 block">Featured Projects</span>
+                        <h2 class="text-3xl md:text-4xl font-extrabold text-[#001D5E]">
+                            Portofolio Unggulan Kami
+                        </h2>
+                        <p class="mt-3 text-gray-600">
+                            Beberapa project pilihan yang kami tampilkan sebagai highlight. Lihat detail untuk inspirasi event Anda.
+                        </p>
+                    </div>
+
+                    <a href="{{ route('portfolio') }}"
+                    class="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-gray-200 bg-white text-[#001D5E] font-bold hover:bg-gray-50 transition">
+                        Lihat Semua <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    @foreach($featuredEvents as $event)
+                    <div class="group bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition overflow-hidden">
+                        <div class="relative h-56 bg-gray-100 overflow-hidden">
+                            @php
+                                // prioritas cover: image -> fallback
+                                $cover = $event->image;
+                            @endphp
+
+                            @if($cover)
+                                <img src="{{ $cover }}"
+                                    alt="{{ $event->title }}"
+                                    class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500">
+                            @else
+                                <div class="w-full h-full flex items-center justify-center text-gray-400">
+                                    <i data-lucide="image" class="w-10 h-10"></i>
+                                </div>
+                            @endif
+
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <p class="text-white font-extrabold text-lg leading-tight line-clamp-2">
+                                    {{ $event->title }}
+                                </p>
+                                <div class="mt-2 flex flex-wrap gap-2 text-xs">
+                                    @if($event->status)
+                                        <span class="px-3 py-1 rounded-full bg-white/15 text-white border border-white/20 backdrop-blur-sm">
+                                            {{ $event->status }}
+                                        </span>
+                                    @endif
+                                    @if($event->client_name)
+                                        <span class="px-3 py-1 rounded-full bg-white/15 text-white border border-white/20 backdrop-blur-sm">
+                                            {{ $event->client_name }}
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-6">
+                            <div class="flex flex-col gap-2 text-sm text-gray-600">
+                                @if($event->location)
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="map-pin" class="w-4 h-4 text-[#F7941D]"></i>
+                                    <span class="line-clamp-1">{{ $event->location }}</span>
+                                </div>
+                                @endif
+
+                                @if($event->date)
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="calendar" class="w-4 h-4 text-[#F7941D]"></i>
+                                    <span>{{ $event->date }}</span>
+                                </div>
+                                @endif
+
+                                @if($event->price)
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="wallet" class="w-4 h-4 text-[#F7941D]"></i>
+                                    <span>{{ $event->price }}</span>
+                                </div>
+                                @endif
+                            </div>
+
+                            <div class="mt-6 flex items-center justify-between">
+                                <a href="{{ route('portfolio') }}"
+                                class="inline-flex items-center gap-2 font-bold text-[#001D5E] hover:text-[#F7941D] transition">
+                                    Lihat Detail <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                                </a>
+
+                                <span class="text-xs text-gray-400">
+                                    {{ optional($event->created_at)->format('d M Y') }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    @endif
+
     {{-- 6. TESTIMONIAL SECTION --}}
         <div class="bg-white py-24">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -395,27 +498,70 @@
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-                    @foreach($testimonials as $testi)
-                    <div class="bg-gray-50 p-8 rounded-3xl border border-gray-100 hover:shadow-xl transition-shadow relative group hover:-translate-y-1">
-                        <div class="flex gap-1 mb-4">
-                            @for($i=0; $i<$testi->stars; $i++)
-                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
-                            @endfor
+                @php
+                    $tCount = $testimonials->count();
+                @endphp
+
+                <div class="mb-16">
+                    <div id="testi-carousel" class="relative overflow-hidden">
+                        {{-- Track --}}
+                        <div id="testi-track" class="flex transition-transform duration-700 ease-in-out">
+                            {{-- Kalau data <= 3, tidak perlu clone --}}
+                            @foreach($testimonials as $testi)
+                                <div class="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-4">
+                                    <div class="bg-gray-50 p-8 rounded-3xl border border-gray-100 hover:shadow-xl transition-shadow relative group hover:-translate-y-1 h-full">
+                                        <div class="flex gap-1 mb-4">
+                                            @for($i=0; $i<$testi->stars; $i++)
+                                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                            @endfor
+                                        </div>
+                                        <p class="text-gray-700 italic mb-6 leading-relaxed">"{{ $testi->content }}"</p>
+                                        <div class="flex items-center gap-4 border-t border-gray-200 pt-4 mt-auto">
+                                            <div class="w-10 h-10 bg-[#001D5E] rounded-full flex items-center justify-center text-white font-bold text-lg">
+                                                {{ substr($testi->name, 0, 1) }}
+                                            </div>
+                                            <div>
+                                                <h4 class="font-bold text-[#001D5E]">{{ $testi->name }}</h4>
+                                                <p class="text-xs text-gray-500">{{ $testi->role ?? 'Client' }}</p>
+                                            </div>
+                                        </div>
+                                        <i data-lucide="quote" class="absolute top-6 right-6 w-10 h-10 text-gray-200 fill-gray-200 group-hover:text-blue-100 transition-colors"></i>
+                                    </div>
+                                </div>
+                            @endforeach
+
+                            {{-- Clone first 3 items for smooth looping (only if > 3) --}}
+                            @if($tCount > 3)
+                                @foreach($testimonials->take(3) as $testi)
+                                    <div class="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-4">
+                                        <div class="bg-gray-50 p-8 rounded-3xl border border-gray-100 hover:shadow-xl transition-shadow relative group hover:-translate-y-1 h-full">
+                                            <div class="flex gap-1 mb-4">
+                                                @for($i=0; $i<$testi->stars; $i++)
+                                                    <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                                @endfor
+                                            </div>
+                                            <p class="text-gray-700 italic mb-6 leading-relaxed">"{{ $testi->content }}"</p>
+                                            <div class="flex items-center gap-4 border-t border-gray-200 pt-4 mt-auto">
+                                                <div class="w-10 h-10 bg-[#001D5E] rounded-full flex items-center justify-center text-white font-bold text-lg">
+                                                    {{ substr($testi->name, 0, 1) }}
+                                                </div>
+                                                <div>
+                                                    <h4 class="font-bold text-[#001D5E]">{{ $testi->name }}</h4>
+                                                    <p class="text-xs text-gray-500">{{ $testi->role ?? 'Client' }}</p>
+                                                </div>
+                                            </div>
+                                            <i data-lucide="quote" class="absolute top-6 right-6 w-10 h-10 text-gray-200 fill-gray-200 group-hover:text-blue-100 transition-colors"></i>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
                         </div>
-                        <p class="text-gray-700 italic mb-6 leading-relaxed">"{{ $testi->content }}"</p>
-                        <div class="flex items-center gap-4 border-t border-gray-200 pt-4">
-                            <div class="w-10 h-10 bg-[#001D5E] rounded-full flex items-center justify-center text-white font-bold text-lg">
-                                {{ substr($testi->name, 0, 1) }}
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-[#001D5E]">{{ $testi->name }}</h4>
-                                <p class="text-xs text-gray-500">{{ $testi->role ?? 'Client' }}</p>
-                            </div>
-                        </div>
-                        <i data-lucide="quote" class="absolute top-6 right-6 w-10 h-10 text-gray-200 fill-gray-200 group-hover:text-blue-100 transition-colors"></i>
+
+                        {{-- Optional: dots (simple) --}}
+                        @if($tCount > 3)
+                            <div class="mt-8 flex justify-center gap-2" id="testi-dots"></div>
+                        @endif
                     </div>
-                    @endforeach
                 </div>
 
                 <div class="text-center">
@@ -543,3 +689,103 @@
        </div>
     </div>
 @endsection
+
+{{-- Script: auto slide 1-by-1 --}}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const carousel = document.getElementById('testi-carousel');
+    const track = document.getElementById('testi-track');
+    if (!carousel || !track) return;
+
+    const totalOriginal = {{ $tCount }};
+    if (totalOriginal <= 3) return; // kalau <= 3, stop (tidak perlu geser)
+
+    let index = 0;
+    let perView = getPerView();
+    let step = 0;
+
+    function getPerView() {
+        const w = window.innerWidth;
+        if (w >= 1024) return 3; // lg
+        if (w >= 768) return 2;  // md
+        return 1;                // mobile
+    }
+
+    function slideTo(i, withTransition = true) {
+        const itemWidth = carousel.clientWidth / perView;
+        if (!withTransition) track.classList.remove('transition-transform', 'duration-700', 'ease-in-out');
+        else track.classList.add('transition-transform', 'duration-700', 'ease-in-out');
+
+        track.style.transform = `translateX(-${i * itemWidth}px)`;
+    }
+
+    function buildDots() {
+        const dotsWrap = document.getElementById('testi-dots');
+        if (!dotsWrap) return;
+
+        // jumlah step = totalOriginal (geser 1 kartu per step), tapi untuk UX cukup batasi:
+        // kita buat dots berdasarkan totalOriginal (boleh kamu ubah jadi Math.ceil(totalOriginal/perView))
+        dotsWrap.innerHTML = '';
+        for (let i = 0; i < totalOriginal; i++) {
+            const b = document.createElement('button');
+            b.className = 'w-2.5 h-2.5 rounded-full bg-gray-300 hover:bg-gray-400 transition';
+            b.addEventListener('click', () => {
+                index = i;
+                slideTo(index, true);
+                paintDots();
+            });
+            dotsWrap.appendChild(b);
+        }
+        paintDots();
+    }
+
+    function paintDots() {
+        const dotsWrap = document.getElementById('testi-dots');
+        if (!dotsWrap) return;
+        [...dotsWrap.children].forEach((d, i) => {
+            d.className = 'w-2.5 h-2.5 rounded-full transition ' + (i === index ? 'bg-[#F7941D]' : 'bg-gray-300 hover:bg-gray-400');
+        });
+    }
+
+    let timer = null;
+
+    function start() {
+        stop();
+        timer = setInterval(() => {
+            index++;
+            slideTo(index, true);
+            paintDots();
+        }, 3500); // kecepatan geser
+    }
+
+    function stop() {
+        if (timer) clearInterval(timer);
+        timer = null;
+    }
+
+    // Loop handling: karena kita clone 3 item, pas index mencapai totalOriginal (atau lebih),
+    // kita reset tanpa transisi biar seamless.
+    track.addEventListener('transitionend', () => {
+        // ketika sudah lewat item asli dan masuk area clone
+        if (index >= totalOriginal) {
+            index = 0;
+            slideTo(index, false);
+            paintDots();
+        }
+    });
+
+    // Responsive: update perView saat resize
+    window.addEventListener('resize', () => {
+        perView = getPerView();
+        slideTo(index, false);
+    });
+
+    // Pause on hover (biar enak)
+    carousel.addEventListener('mouseenter', stop);
+    carousel.addEventListener('mouseleave', start);
+
+    buildDots();
+    slideTo(0, false);
+    start();
+});
+</script>

@@ -1,111 +1,221 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('content')
-<div class="max-w-4xl mx-auto px-4 py-16 min-h-screen">
-    
-    <div class="flex items-center justify-between mb-8">
-        <h2 class="text-3xl font-black text-[#001D5E]">Riwayat Booking Saya</h2>
-        <a href="{{ route('services') }}" class="text-sm font-bold text-blue-600 hover:underline">
-            + Booking Baru
-        </a>
+<div class="max-w-5xl mx-auto px-4 py-14 min-h-screen">
+
+    {{-- Header --}}
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+        <div>
+            <h2 class="text-3xl font-black text-[#001D5E]">Riwayat Permintaan Event</h2>
+            <p class="mt-2 text-gray-600">
+                Pantau status permintaan Anda. Tim kami akan menghubungi via WhatsApp untuk konfirmasi detail.
+            </p>
+        </div>
     </div>
 
-    {{-- Pesan Sukses jika baru submit --}}
+    {{-- Success message (lebih meyakinkan + SLA) --}}
     @if(session('success'))
-        <div class="bg-green-100 border border-green-200 text-green-700 p-4 rounded-xl mb-6 flex items-center gap-2">
-            <i data-lucide="check-circle" class="w-5 h-5"></i>
-            {{ session('success') }}
+        <div class="mb-8 rounded-2xl border border-green-200 bg-green-50 p-5">
+            <div class="flex items-start gap-3">
+                <div class="mt-0.5 text-green-700">
+                    <i data-lucide="check-circle" class="w-6 h-6"></i>
+                </div>
+                <div class="flex-1">
+                    <p class="font-extrabold text-green-800">Permintaan event berhasil kami terima.</p>
+                    <p class="text-green-800/90 mt-1">
+                        Tim Stukka akan menghubungi Anda via WhatsApp <span class="font-bold">maksimal 1×24 jam</span>.
+                        Tidak ada biaya pada tahap ini.
+                    </p>
+                    <p class="text-sm text-green-900/70 mt-2">{{ session('success') }}</p>
+                </div>
+            </div>
         </div>
     @endif
 
-    <div class="space-y-6">
-        @foreach($myBookings as $booking)
-            <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 transition hover:shadow-xl">
-                
-                {{-- Bagian Atas: Info Utama & Badge Status --}}
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                    
-                    {{-- Detail Event --}}
-                    <div>
-                        <h4 class="font-bold text-xl text-[#001D5E] mb-1">
-                            {{ $booking->event_type }} {{-- Sesuai DB baru --}}
-                        </h4>
-                        <div class="flex items-center gap-4 text-gray-500 text-sm">
-                            <span class="flex items-center gap-1">
-                                <i data-lucide="calendar" class="w-4 h-4"></i>
-                                {{ \Carbon\Carbon::parse($booking->event_date)->format('d F Y') }} {{-- Sesuai DB baru --}}
-                            </span>
-                            <span class="flex items-center gap-1">
-                                <i data-lucide="users" class="w-4 h-4"></i>
-                                Est. {{ $booking->guest_estimate ?? '-' }} Tamu
-                            </span>
+    {{-- Overview Stats --}}
+    @php
+        $countPending = $myBookings->where('status', 'pending')->count();
+        $countApproved = $myBookings->where('status', 'approved')->count();
+        $countRejected = $myBookings->where('status', 'rejected')->count();
+        $countTotal = $myBookings->count();
+    @endphp
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+        <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
+            <p class="text-sm text-gray-500 font-bold">Total Permintaan</p>
+            <p class="text-3xl font-black text-[#001D5E] mt-1">{{ $countTotal }}</p>
+        </div>
+        <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
+            <p class="text-sm text-gray-500 font-bold">Menunggu</p>
+            <p class="text-3xl font-black text-yellow-600 mt-1">{{ $countPending }}</p>
+        </div>
+        <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
+            <p class="text-sm text-gray-500 font-bold">Disetujui</p>
+            <p class="text-3xl font-black text-green-600 mt-1">{{ $countApproved }}</p>
+        </div>
+        <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
+            <p class="text-sm text-gray-500 font-bold">Ditolak</p>
+            <p class="text-3xl font-black text-red-600 mt-1">{{ $countRejected }}</p>
+        </div>
+    </div>
+
+    {{-- Empty State --}}
+    @if($myBookings->isEmpty())
+        <div class="text-center py-14 bg-white rounded-3xl border border-gray-100 shadow-sm">
+            <div class="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-400">
+                <i data-lucide="calendar-off" class="w-8 h-8"></i>
+            </div>
+            <h3 class="text-lg font-extrabold text-gray-800">Belum ada permintaan event.</h3>
+            <p class="text-gray-500 mt-2 mb-6">Mulai dari cek tanggal dan ajukan kebutuhan event Anda.</p>
+            <a href="{{ route('services') }}"
+               class="inline-flex items-center gap-2 px-7 py-3 bg-[#001D5E] text-white font-bold rounded-xl hover:bg-blue-900 transition shadow">
+                <i data-lucide="sparkles" class="w-5 h-5"></i>
+                Ajukan Permintaan Pertama
+            </a>
+        </div>
+    @else
+
+        {{-- List --}}
+        <div class="space-y-6">
+            @foreach($myBookings as $booking)
+
+                @php
+                    // Booking reference sederhana (kalau belum punya kolom booking_code)
+                    // Ini bukan ideal, tapi cukup untuk "feel professional".
+                    $ref = 'STK-' . \Carbon\Carbon::parse($booking->created_at)->format('Ymd') . '-' . str_pad($booking->id, 4, '0', STR_PAD_LEFT);
+
+                    $statusLabel = match($booking->status) {
+                        'approved' => 'Disetujui',
+                        'pending' => 'Menunggu Konfirmasi',
+                        'rejected' => 'Ditolak',
+                        default => 'Status Tidak Diketahui',
+                    };
+                @endphp
+
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 transition hover:shadow-lg">
+                    {{-- Top row --}}
+                    <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+                        <div class="flex-1">
+                            <div class="flex items-start justify-between gap-4">
+                                <div>
+                                    <p class="text-xs font-bold text-gray-500">Booking Ref</p>
+                                    <p class="font-extrabold text-gray-800">{{ $ref }}</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-xs font-bold text-gray-500">Dibuat</p>
+                                    <p class="font-semibold text-gray-800">
+                                        {{ \Carbon\Carbon::parse($booking->created_at)->format('d M Y, H:i') }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <h4 class="mt-4 font-black text-2xl text-[#001D5E]">
+                                {{ $booking->event_type }}
+                            </h4>
+
+                            <div class="mt-3 flex flex-wrap items-center gap-4 text-gray-600 text-sm">
+                                <span class="flex items-center gap-2">
+                                    <i data-lucide="calendar" class="w-4 h-4"></i>
+                                    {{ \Carbon\Carbon::parse($booking->event_date)->format('d F Y') }}
+                                </span>
+
+                                <span class="flex items-center gap-2">
+                                    <i data-lucide="users" class="w-4 h-4"></i>
+                                    Est. {{ $booking->guest_estimate ?? '-' }} tamu
+                                </span>
+
+                                <span class="flex items-center gap-2">
+                                    <i data-lucide="wallet" class="w-4 h-4"></i>
+                                    Budget: {{ $booking->budget_estimate ?? '-' }}
+                                </span>
+                            </div>
+                        </div>
+
+                        {{-- Status + actions --}}
+                        <div class="flex flex-col items-start lg:items-end gap-3">
+                            @if($booking->status == 'approved')
+                                <span class="inline-flex items-center gap-2 bg-green-100 text-green-800 px-4 py-2 rounded-full font-extrabold text-sm border border-green-200">
+                                    <i data-lucide="check-circle" class="w-4 h-4"></i>
+                                    {{ $statusLabel }}
+                                </span>
+                            @elseif($booking->status == 'pending')
+                                <span class="inline-flex items-center gap-2 bg-yellow-100 text-yellow-800 px-4 py-2 rounded-full font-extrabold text-sm border border-yellow-200">
+                                    <i data-lucide="clock" class="w-4 h-4"></i>
+                                    {{ $statusLabel }}
+                                </span>
+                            @else
+                                <span class="inline-flex items-center gap-2 bg-red-100 text-red-800 px-4 py-2 rounded-full font-extrabold text-sm border border-red-200">
+                                    <i data-lucide="x-circle" class="w-4 h-4"></i>
+                                    {{ $statusLabel }}
+                                </span>
+                            @endif
+
+                            {{-- Timeline kecil buat pending --}}
+                            @if($booking->status == 'pending')
+                                <div class="w-full lg:w-72 bg-gray-50 border border-gray-100 rounded-2xl p-4">
+                                    <p class="text-xs font-bold text-gray-500 mb-3">Tahapan</p>
+                                    <div class="space-y-2 text-sm text-gray-700">
+                                        <div class="flex items-center gap-2">
+                                            <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                                            Permintaan diterima
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <span class="w-2 h-2 rounded-full bg-yellow-500"></span>
+                                            Konfirmasi tim (≤ 1×24 jam)
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <span class="w-2 h-2 rounded-full bg-gray-300"></span>
+                                            Finalisasi jadwal & penawaran
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
 
-                    {{-- Badge Status --}}
-                    <div>
-                        @if($booking->status == 'approved')
-                            <div class="flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-full font-bold shadow-sm border border-green-200">
-                                <i data-lucide="check-circle" class="w-5 h-5"></i> BOOKING DISETUJUI
+                    {{-- Admin notes --}}
+                    @if($booking->admin_notes)
+                        @if($booking->status == 'rejected')
+                            <div class="mt-6 p-4 bg-red-50 border border-red-100 rounded-2xl">
+                                <div class="flex items-start gap-3">
+                                    <i data-lucide="alert-circle" class="w-5 h-5 text-red-600 mt-0.5"></i>
+                                    <div>
+                                        <p class="text-xs font-extrabold text-red-700 uppercase mb-1">Catatan Admin</p>
+                                        <p class="text-gray-800 italic">"{{ $booking->admin_notes }}"</p>
+                                    </div>
+                                </div>
                             </div>
-                        @elseif($booking->status == 'pending')
-                            <span class="flex items-center gap-2 bg-yellow-100 text-yellow-700 px-4 py-2 rounded-full font-bold text-sm border border-yellow-200">
-                                <i data-lucide="clock" class="w-4 h-4"></i> Menunggu Konfirmasi
-                            </span>
                         @else
-                            <span class="flex items-center gap-2 bg-red-100 text-red-700 px-4 py-2 rounded-full font-bold text-sm border border-red-200">
-                                <i data-lucide="x-circle" class="w-4 h-4"></i> Maaf, Ditolak
-                            </span>
+                            <div class="mt-6 p-4 bg-blue-50 border border-blue-100 rounded-2xl">
+                                <div class="flex items-start gap-3">
+                                    <i data-lucide="info" class="w-5 h-5 text-blue-600 mt-0.5"></i>
+                                    <div>
+                                        <p class="text-xs font-extrabold text-blue-700 uppercase mb-1">Catatan Admin</p>
+                                        <p class="text-gray-800 italic">"{{ $booking->admin_notes }}"</p>
+                                    </div>
+                                </div>
+                            </div>
                         @endif
-                    </div>
-                </div>
-
-                {{-- Bagian Bawah: Menampilkan Catatan Admin (Jika Ada) --}}
-                @if($booking->admin_notes)
-                    
-                    {{-- Tampilan Jika DITOLAK (Merah) --}}
-                    @if($booking->status == 'rejected')
-                        <div class="mt-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-r-lg">
-                            <div class="flex items-start gap-3">
-                                <i data-lucide="alert-circle" class="w-5 h-5 text-red-600 mt-0.5"></i>
-                                <div>
-                                    <p class="text-xs font-bold text-red-600 uppercase mb-1">Alasan Penolakan / Catatan:</p>
-                                    <p class="text-gray-700 italic">"{{ $booking->admin_notes }}"</p>
-                                </div>
-                            </div>
-                        </div>
-
-                    {{-- Tampilan Jika DISETUJUI (Biru) --}}
-                    @elseif($booking->status == 'approved')
-                        <div class="mt-6 p-4 bg-blue-50 border-l-4 border-blue-500 rounded-r-lg">
-                            <div class="flex items-start gap-3">
-                                <i data-lucide="info" class="w-5 h-5 text-blue-600 mt-0.5"></i>
-                                <div>
-                                    <p class="text-xs font-bold text-blue-600 uppercase mb-1">Pesan dari Admin:</p>
-                                    <p class="text-gray-700 italic">"{{ $booking->admin_notes }}"</p>
-                                </div>
-                            </div>
-                        </div>
                     @endif
 
-                @endif
+                    {{-- Footer actions --}}
+                    <div class="mt-6 pt-5 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                        <p class="text-sm text-gray-600">
+                            Butuh cepat? Hubungi admin dan sebutkan <span class="font-extrabold text-gray-800">{{ $ref }}</span>.
+                        </p>
 
-            </div>
-        @endforeach
-
-        {{-- Jika Tidak Ada Data --}}
-        @if($myBookings->isEmpty())
-            <div class="text-center py-12">
-                <div class="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-400">
-                    <i data-lucide="calendar-off" class="w-8 h-8"></i>
+                        <a href="https://wa.me/6285813505686?text={{ urlencode('Halo admin Stukka, saya ingin follow-up permintaan event. Ref: '.$ref) }}"
+                           target="_blank"
+                           class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-white border border-gray-200 text-gray-800 font-bold hover:bg-gray-50 transition">
+                            <i data-lucide="message-circle" class="w-5 h-5"></i>
+                            Follow-up WhatsApp
+                        </a>
+                    </div>
                 </div>
-                <h3 class="text-lg font-bold text-gray-700">Belum ada riwayat booking.</h3>
-                <p class="text-gray-500 mb-6">Yuk, rencanakan event impianmu sekarang!</p>
-                <a href="{{ route('services') }}" class="inline-block px-6 py-3 bg-[#001D5E] text-white font-bold rounded-full hover:bg-blue-900 transition shadow-lg">
-                    Buat Booking Baru
-                </a>
-            </div>
-        @endif
-    </div>
+
+            @endforeach
+        </div>
+    @endif
+
 </div>
 @endsection

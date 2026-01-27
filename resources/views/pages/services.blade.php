@@ -170,13 +170,27 @@
 
                 <div class="flex justify-center relative z-10">
                     @auth
-                        <button type="submit" class="w-full md:w-auto px-10 py-4 bg-[#001D5E] text-white font-bold rounded-xl hover:bg-blue-900 transition-all shadow-lg shadow-blue-900/20 flex items-center justify-center gap-2 group">
-                            Lanjut Isi Formulir Booking <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                        {{-- Saat sudah login: submit untuk lanjut isi form booking --}}
+                        <button
+                            type="submit"
+                            class="w-full md:w-auto px-10 py-4 bg-[#001D5E] text-white font-bold rounded-xl hover:bg-blue-900 transition-all shadow-lg shadow-blue-900/20 flex items-center justify-center gap-2 group">
+                            Lanjut Isi Formulir Booking
+                            <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
                         </button>
                     @else
-                        <a href="{{ route('login') }}" class="w-full md:w-auto px-10 py-4 bg-gray-200 text-gray-500 font-bold rounded-xl hover:bg-gray-300 transition-all flex items-center justify-center gap-2 group">
-                            Login untuk Melanjutkan <i data-lucide="lock" class="w-4 h-4"></i>
-                        </a>
+                        {{-- Saat belum login: bukan <a>, tapi button yang akan redirect via JS membawa tanggal --}}
+                        <button
+                            type="button"
+                            id="loginBookingBtn"
+                            class="w-full md:w-auto px-10 py-4 bg-gray-200 text-gray-500 font-bold rounded-xl hover:bg-gray-300 transition-all flex items-center justify-center gap-2 group">
+                            Masuk untuk mengisi detail booking
+                            <i data-lucide="lock" class="w-4 h-4"></i>
+                        </button>
+
+                        {{-- optional: pesan error kecil di bawah tombol --}}
+                        <p id="bookingDateError" class="hidden mt-3 text-sm text-red-600 text-center">
+                            Silakan pilih tanggal acara terlebih dahulu.
+                        </p>
                     @endauth
                 </div>
 
@@ -189,25 +203,59 @@
 {{-- PENTING: Ditaruh di sini (bukan di @push) agar pasti tereksekusi --}}
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Ambil data tanggal dari controller, jika null gunakan array kosong
-        var bookedDates = @json($bookedDates ?? []); 
+document.addEventListener('DOMContentLoaded', function () {
+    // 1) Data booked dates dari controller (aman)
+    const bookedDates = @json($bookedDates ?? []);
+    console.log("Booked Dates:", bookedDates);
 
-        console.log("Booked Dates:", bookedDates); // Cek di Console Browser (F12)
+    // 2) Ambil date dari query string (misal setelah login balik ke /services?date=2026-02-06)
+    const urlParams = new URLSearchParams(window.location.search);
+    const prefilledDate = urlParams.get('date'); // format Y-m-d
 
-        flatpickr("#datepicker", {
-            minDate: "today",       
-            dateFormat: "Y-m-d",    
-            altInput: true,         
-            altFormat: "j F Y",     
-            disable: bookedDates,   
-            allowInput: true,       // Memaksa agar input tetap terasa 'hidup'
-            clickOpens: true,       // Memastikan klik membuka kalender
-            locale: {
-                firstDayOfWeek: 1   
+    // 3) Init flatpickr
+    const fp = flatpickr("#datepicker", {
+        minDate: "today",
+        dateFormat: "Y-m-d",   // value input (untuk backend)
+        altInput: true,
+        altFormat: "j F Y",    // tampilan user
+        disable: bookedDates,
+        allowInput: true,
+        clickOpens: true,
+        locale: { firstDayOfWeek: 1 },
+        defaultDate: prefilledDate || null, // auto isi jika ada date dari query
+        onReady: function(selectedDates, dateStr, instance) {
+            // Kalau date dari query ternyata termasuk bookedDates, kasih sinyal (opsional)
+            if (prefilledDate && bookedDates.includes(prefilledDate)) {
+                console.warn("Prefilled date is booked:", prefilledDate);
             }
-        });
+        }
     });
+
+    // 4) Tombol login (guest) -> redirect bawa date
+    const loginBtn = document.getElementById('loginBookingBtn');
+    if (loginBtn) {
+        loginBtn.addEventListener('click', function () {
+            const dateValue = document.getElementById('datepicker')?.value?.trim(); // Y-m-d
+            const errorEl = document.getElementById('bookingDateError');
+
+            if (!dateValue) {
+                if (errorEl) errorEl.classList.remove('hidden');
+                return;
+            }
+            if (errorEl) errorEl.classList.add('hidden');
+
+            // Redirect kembali ke halaman ini setelah login
+            const redirectPath = '/booking/form'; // misal /services
+            const params = new URLSearchParams({
+                redirect: redirectPath,
+                date: dateValue
+            });
+
+            window.location.href = `/login?${params.toString()}`;
+        });
+    }
+});
 </script>
+
 
 @endsection

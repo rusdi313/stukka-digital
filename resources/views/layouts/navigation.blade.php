@@ -46,27 +46,45 @@
                         </button>
                         
                         {{-- Dropdown Menu --}}
-                        <div class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg py-2 text-gray-800 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-right z-50">
-                            
-                            {{-- Link ke Dashboard / Admin --}}
-                            <a href="{{ route('admin.events.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#001D5E]">
-                                <div class="flex items-center gap-2">
-                                    <i data-lucide="layout-dashboard" class="w-4 h-4 text-[#F7941D]"></i>
-                                    <span class="font-bold">Mode Admin (CMS)</span>
-                                </div>
-                            </a>
+                        <div class="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg py-2 text-gray-800 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-right z-50 border border-gray-100">
 
-                            {{-- Tombol Logout --}}
+                            {{-- Header kecil user --}}
+                            <div class="px-4 py-2">
+                                <p class="text-sm font-extrabold text-gray-800">{{ Auth::user()->name }}</p>
+                                <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
+                            </div>
+
+                            <div class="my-1 border-t border-gray-100"></div>
+
+                            {{-- Menu berdasarkan role --}}
+                            @if(Auth::user()->usertype === 'admin')
+                                <a href="{{ route('admin.events.index') }}"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#001D5E]">
+                                    <div class="flex items-center gap-2">
+                                        <i data-lucide="layout-dashboard" class="w-4 h-4 text-[#F7941D]"></i>
+                                        <span class="font-bold">Dashboard Admin (CMS)</span>
+                                    </div>
+                                </a>
+                            @else
+                                <a href="{{ route('user.dashboard') }}"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#001D5E]">
+                                    <div class="flex items-center gap-2">
+                                        <i data-lucide="clipboard-list" class="w-4 h-4 text-[#F7941D]"></i>
+                                        <span class="font-bold">Status Booking Saya</span>
+                                    </div>
+                                </a>
+                            @endif
+
+                            <div class="my-1 border-t border-gray-100"></div>
+
+                            {{-- Logout --}}
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 font-bold">
+                                <button type="submit"
+                                        class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 font-bold">
                                     Keluar
                                 </button>
                             </form>
-
-                            <a href="{{ route('user.dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                Status Booking Saya
-                            </a>
                         </div>
                     </div>
 

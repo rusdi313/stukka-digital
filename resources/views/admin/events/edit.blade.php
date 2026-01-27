@@ -42,6 +42,18 @@
                 <img src="{{ $event->image }}" class="w-32 mt-2 rounded">
             </div>
 
+            <div class="mb-4 p-4 bg-yellow-50 border border-yellow-200 rounded-xl flex items-center gap-3">
+                <input
+                    type="checkbox"
+                    name="is_featured"
+                    value="1"
+                    id="feat"
+                    class="w-5 h-5 rounded"
+                    {{ $event->is_featured ? 'checked' : '' }}
+                >
+                <label for="feat" class="font-bold text-gray-700">Tampilkan di Halaman Depan (Featured)?</label>
+            </div>
+
             <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 font-bold">Update Project</button>
         </form>
     </div>

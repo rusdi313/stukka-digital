@@ -21,20 +21,18 @@ use Illuminate\Support\Facades\Route;
 
 // Halaman Utama (Home)
 Route::get('/', function () {
-    // 1. Ambil 3 Project yang ditandai 'is_featured'
-    $featuredPortfolios = \App\Models\Event::where('is_featured', true)->latest()->take(3)->get();
-    
-    // Jika admin belum set featured, ambil 3 terakhir saja sebagai default
-    if($featuredPortfolios->isEmpty()) {
-        $featuredPortfolios = \App\Models\Event::latest()->take(3)->get();
+    $featuredEvents = \App\Models\Event::where('is_featured', true)->latest()->take(3)->get();
+
+    if ($featuredEvents->isEmpty()) {
+        $featuredEvents = \App\Models\Event::latest()->take(3)->get();
     }
 
-    // 2. Ambil Semua Client & Testimoni
     $clients = \App\Models\Client::all();
     $testimonials = \App\Models\Testimonial::latest()->get();
 
-    return view('pages.home', compact('featuredPortfolios', 'clients', 'testimonials'));
+    return view('pages.home', compact('featuredEvents', 'clients', 'testimonials'));
 })->name('home');
+
 
 // Halaman Portofolio
 Route::get('/portfolio', [EventController::class, 'index'])->name('portfolio');
@@ -49,9 +47,9 @@ Route::get('/services', [BookingController::class, 'services'])->name('services'
 // 2. DASHBOARD & PROFILE USER (Harus Login)
 // =========================================================================
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     // Profile Breeze
@@ -72,7 +70,7 @@ Route::middleware('auth')->group(function () {
 // 3. ADMIN CMS (Full Akses Admin)
 // =========================================================================
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    
+
     // A. DASHBOARD UTAMA ADMIN
     Route::get('/', function () {
         $totalProjects = \App\Models\Event::count();
@@ -82,11 +80,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         $pendingBookings = \App\Models\Booking::where('status', 'pending')->count();
 
         return view('admin.dashboard', compact('totalProjects', 'totalClients', 'totalTestimonials', 'pendingBookings'));
-    })->name('index'); 
+    })->name('index');
 
     // B. KELOLA PORTOFOLIO (Resource)
     Route::resource('events', AdminEventController::class);
-    
+
     // C. KELOLA CLIENT TRUST (Logo)
     Route::get('/clients', [AdminClientController::class, 'index'])->name('clients.index');
     Route::post('/clients', [AdminClientController::class, 'store'])->name('clients.store');
@@ -107,4 +105,4 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 // =========================================================================
 // 4. AUTHENTICATION
 // =========================================================================
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
