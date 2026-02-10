@@ -88,8 +88,10 @@
                             @foreach($clients as $client)
                             <div class="group relative bg-gray-50 rounded-xl p-4 border border-gray-100 hover:shadow-lg hover:border-blue-100 transition-all duration-300 flex flex-col items-center justify-center h-40">
                                 
-                                {{-- Logo Image --}}
-                                <img src="{{ $client->logo }}" alt="{{ $client->name }}" class="h-16 w-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-110">
+                                {{-- Logo Image (KEMBALI KE KODE AWAL SUPAYA MUNCUL) --}}
+                                <img src="{{ $client->logo }}" 
+                                     alt="{{ $client->name }}" 
+                                     class="h-16 w-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-110">
                                 
                                 {{-- Tooltip Name --}}
                                 <p class="mt-4 text-xs font-bold text-gray-400 group-hover:text-[#001D5E] text-center line-clamp-1 transition-colors">

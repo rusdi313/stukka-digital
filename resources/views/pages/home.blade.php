@@ -178,11 +178,10 @@
         </div>
     </div>
 
-    {{-- 2. ABOUT STUKKA (Layout Kiri-Kanan) --}}
+    {{-- 2. ABOUT STUKKA --}}
     <div class="bg-white pt-24 pb-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row items-center gap-12">
-                {{-- Kiri: Gambar Pesawat --}}
                 <div class="w-full md:w-1/2 relative z-0">
                     <div class="absolute top-4 left-4 w-full h-full bg-gray-100 rounded-3xl -z-10"></div>
                     <img src="{{ asset('images/stukka.jpg') }}" 
@@ -192,7 +191,6 @@
                         Junkers Ju 87 "Stuka"
                     </div>
                 </div>
-                {{-- Kanan: Teks Filosofi --}}
                 <div class="w-full md:w-1/2 text-left">
                     <span class="text-[#F7941D] font-bold tracking-widest uppercase text-sm mb-4 block">Our Philosophy</span>
                     <h2 class="text-3xl md:text-5xl font-extrabold text-[#001D5E] mb-6 leading-tight">
@@ -229,9 +227,8 @@
         </div>
     </div>
 
-    {{-- 3. WHY US (Format Kartu Modern) --}}
+    {{-- 3. WHY US --}}
     <div class="bg-gray-50 py-24 relative overflow-hidden">
-        {{-- Hiasan Background --}}
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-30 pointer-events-none">
             <div class="absolute -top-24 -right-24 w-96 h-96 bg-blue-100 rounded-full blur-3xl"></div>
             <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-orange-100 rounded-full blur-3xl"></div>
@@ -249,7 +246,6 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {{-- Kartu 1 --}}
                 <div class="bg-white p-8 rounded-3xl shadow-lg border border-gray-100 hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 group flex flex-col">
                     <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#001D5E] transition-colors duration-300">
                         <i data-lucide="zap" class="w-7 h-7 text-[#001D5E] group-hover:text-white transition-colors"></i>
@@ -259,7 +255,6 @@
                         "Di Stukka Digital Creative, kami berkomitmen untuk terus menciptakan pengalaman acara yang mengesankan dan memukau melalui sentuhan kreatif digital. Kami percaya bahwa dengan inovasi, keahlian, dan keberanian, kami dapat mengubah cara orang mengalami dan berinteraksi dengan acara."
                     </p>
                 </div>
-                {{-- Kartu 2 --}}
                 <div class="bg-white p-8 rounded-3xl shadow-lg border border-gray-100 hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 group flex flex-col relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-20 h-20 bg-[#F7941D]/10 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-150"></div>
                     <div class="w-14 h-14 bg-orange-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#F7941D] transition-colors duration-300">
@@ -270,7 +265,6 @@
                         "Kami bangga atas prestasi dan portofolio kami yang mencerminkan dedikasi kami dalam memberikan solusi terdepan. Kolaborasi dengan klien terkemuka, pengembangan aplikasi inovatif, dan kesuksesan mengorganisir acara bersejarah adalah cerminan dari nilai-nilai kami yang kuat."
                     </p>
                 </div>
-                {{-- Kartu 3 --}}
                 <div class="bg-white p-8 rounded-3xl shadow-lg border border-gray-100 hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 group flex flex-col">
                     <div class="w-14 h-14 bg-purple-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-purple-600 transition-colors duration-300">
                         <i data-lucide="heart" class="w-7 h-7 text-purple-600 group-hover:text-white transition-colors"></i>
@@ -317,10 +311,9 @@
         </div>
     </div>
 
-    {{-- 5. SPONSORSHIP MANAGEMENT (NO GRAY LINE) --}}
+    {{-- 5. SPONSORSHIP MANAGEMENT --}}
     <div class="py-24 bg-[#F9FAFB] border-t border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {{-- Header --}}
             <div class="text-center max-w-4xl mx-auto mb-16">
                 <span class="text-[#F7941D] font-bold tracking-widest uppercase text-sm mb-3 block">Partnership Support</span>
                 <h2 class="text-3xl md:text-4xl font-extrabold text-[#001D5E] mb-6">Sponsorship Management</h2>
@@ -332,7 +325,6 @@
             </div>
 
             <div class="flex flex-col lg:flex-row gap-16 items-start">
-                {{-- KOLOM KIRI: Penjelasan Umum --}}
                 <div class="w-full lg:w-5/12 sticky top-24">
                     <h3 class="text-2xl font-bold text-[#001D5E] mb-6 flex items-center gap-3">
                         <div class="w-10 h-10 bg-[#001D5E] rounded-lg flex items-center justify-center">
@@ -358,7 +350,6 @@
                     </div>
                 </div>
 
-                {{-- KOLOM KANAN: 5 Poin Layanan (GARIS ABU DIHILANGKAN) --}}
                 <div class="w-full lg:w-7/12">
                     <div class="space-y-6">
                         @foreach($sponsorshipSteps as $index => $step)
@@ -367,7 +358,6 @@
                                 <div class="w-14 h-14 rounded-2xl bg-white border border-gray-200 flex items-center justify-center group-hover:bg-[#001D5E] group-hover:border-[#001D5E] transition-all duration-300 shadow-sm">
                                     <i data-lucide="{{ $step['icon'] }}" class="w-6 h-6 text-gray-400 group-hover:text-white transition-colors"></i>
                                 </div>
-                                {{-- KODE GARIS ABU SUDAH SAYA HAPUS DI SINI --}}
                             </div>
                             <div class="pb-8">
                                 <h4 class="text-xl font-bold text-[#001D5E] mb-2 group-hover:text-[#F7941D] transition-colors">
@@ -411,14 +401,13 @@
                     <div class="group bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition overflow-hidden">
                         <div class="relative h-56 bg-gray-100 overflow-hidden">
                             @php
-                                // prioritas cover: image -> fallback
                                 $cover = $event->image;
                             @endphp
 
                             @if($cover)
                                 <img src="{{ $cover }}"
-                                    alt="{{ $event->title }}"
-                                    class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500">
+                                     alt="{{ $event->title }}"
+                                     class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500">
                             @else
                                 <div class="w-full h-full flex items-center justify-center text-gray-400">
                                     <i data-lucide="image" class="w-10 h-10"></i>
@@ -504,9 +493,7 @@
 
                 <div class="mb-16">
                     <div id="testi-carousel" class="relative overflow-hidden">
-                        {{-- Track --}}
                         <div id="testi-track" class="flex transition-transform duration-700 ease-in-out">
-                            {{-- Kalau data <= 3, tidak perlu clone --}}
                             @foreach($testimonials as $testi)
                                 <div class="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-4">
                                     <div class="bg-gray-50 p-8 rounded-3xl border border-gray-100 hover:shadow-xl transition-shadow relative group hover:-translate-y-1 h-full">
@@ -530,7 +517,6 @@
                                 </div>
                             @endforeach
 
-                            {{-- Clone first 3 items for smooth looping (only if > 3) --}}
                             @if($tCount > 3)
                                 @foreach($testimonials->take(3) as $testi)
                                     <div class="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-4">
@@ -557,7 +543,6 @@
                             @endif
                         </div>
 
-                        {{-- Optional: dots (simple) --}}
                         @if($tCount > 3)
                             <div class="mt-8 flex justify-center gap-2" id="testi-dots"></div>
                         @endif
@@ -572,67 +557,105 @@
             </div>
         </div>
 
-{{-- 9. CLIENT TRUST SECTION (REVISI: FULL COLOR, NO PAUSE, SLOW) --}}
-<div class="bg-[#F9FAFB] py-24 border-y border-gray-200 relative overflow-hidden">
-    {{-- Gradient Overlay tetap dipertahankan untuk estetika pudar di pinggir --}}
-    <div class="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#F9FAFB] to-transparent z-10 pointer-events-none"></div>
-    <div class="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#F9FAFB] to-transparent z-10 pointer-events-none"></div>
+{{-- 9. CLIENT TRUST SECTION (FINAL: JARAK RAPAT & COMPACT) --}}
+    <div class="bg-[#F9FAFB] py-24 border-y border-gray-200 relative overflow-hidden">
+        
+        <style>
+            @keyframes scrollLeft {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+            }
+            @keyframes scrollRight {
+                0% { transform: translateX(-50%); }
+                100% { transform: translateX(0); }
+            }
+            
+            .animate-scroll-left {
+                animation: scrollLeft var(--scroll-duration, 60s) linear infinite;
+            }
+            .animate-scroll-right {
+                animation: scrollRight var(--scroll-duration, 60s) linear infinite;
+            }
 
-    <div class="relative z-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <span class="text-[#F7941D] font-bold tracking-widest uppercase text-sm mb-3 block">
-                They Trust Us
-            </span>
-            <h2 class="text-4xl md:text-5xl font-extrabold text-[#001D5E]">
-                Trusted by Great Brands
-            </h2>
-            <p class="mt-4 text-gray-500">Kolaborasi dengan klien terkemuka untuk acara bersejarah.</p>
+            .mask-gradient-left { background: linear-gradient(to right, #F9FAFB, transparent); }
+            .mask-gradient-right { background: linear-gradient(to left, #F9FAFB, transparent); }
+        </style>
+
+        <div class="absolute inset-y-0 left-0 w-32 mask-gradient-left z-10 pointer-events-none"></div>
+        <div class="absolute inset-y-0 right-0 w-32 mask-gradient-right z-10 pointer-events-none"></div>
+
+        <div class="relative z-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+            <div class="text-center">
+                <span class="text-[#F7941D] font-bold tracking-widest uppercase text-sm mb-3 block">They Trust Us</span>
+                <h2 class="text-4xl md:text-5xl font-extrabold text-[#001D5E]">Trusted by Great Brands</h2>
+                <p class="mt-4 text-gray-500">Kolaborasi dengan klien terkemuka untuk acara bersejarah.</p>
+            </div>
         </div>
 
-        {{-- CONTAINER LOGO --}}
-        <div class="flex flex-col gap-10 overflow-hidden">
+        <div class="space-y-12">
             
-            {{-- CATATAN MENTOR: 
-                 Tag <style> untuk .hover-pause SUDAH DIHAPUS disini.
-                 Sehingga saat kena kursor, dia tidak akan berhenti.
-            --}}
-
             {{-- BARIS 1: Bergerak ke KIRI --}}
-            {{-- Class 'hover-pause' juga sudah dihapus dari div ini --}}
-            <div class="flex animate-scroll-left w-max gap-16 md:gap-24 items-center">
-                @for ($i = 0; $i < 20; $i++) 
+            <div class="w-full overflow-hidden">
+                {{-- PERUBAHAN: gap-6 md:gap-12 (Lebih rapat lagi) --}}
+                <div class="flex w-max animate-scroll-left js-scroll-container gap-6 md:gap-12 px-4">
+                    {{-- SET 1 --}}
                     @foreach($clients as $client)
-                        {{-- 
-                            REVISI WARNA:
-                            Class 'grayscale', 'opacity-70', dan 'hover:...' SUDAH DIHAPUS.
-                            Sekarang logo tampil dengan warna aslinya.
-                        --}}
-                        <div class="flex-shrink-0 w-32 md:w-48 flex justify-center items-center">
+                        <div class="flex-shrink-0 w-32 md:w-48 flex justify-center items-center group">
                             <img src="{{ $client->logo }}" 
                                  class="h-12 md:h-16 w-auto object-contain hover:scale-110 transition-transform duration-300 cursor-pointer" 
                                  alt="{{ $client->name }}">
                         </div>
                     @endforeach
-                @endfor
+                    {{-- SET 2 (Clone) --}}
+                    @foreach($clients as $client)
+                        <div class="flex-shrink-0 w-32 md:w-48 flex justify-center items-center group">
+                            <img src="{{ $client->logo }}" 
+                                 class="h-12 md:h-16 w-auto object-contain hover:scale-110 transition-transform duration-300 cursor-pointer" 
+                                 alt="{{ $client->name }}">
+                        </div>
+                    @endforeach
+                </div>
             </div>
 
             {{-- BARIS 2: Bergerak ke KANAN --}}
-            <div class="flex animate-scroll-right w-max gap-16 md:gap-24 items-center">
-                @for ($i = 0; $i < 20; $i++) 
+            <div class="w-full overflow-hidden">
+                {{-- PERUBAHAN: gap-6 md:gap-12 --}}
+                <div class="flex w-max animate-scroll-right js-scroll-container gap-6 md:gap-12 px-4">
+                    {{-- SET 1 --}}
                     @foreach($clients->reverse() as $client)
-                        {{-- REVISI WARNA: Class grayscale dan opacity dihapus --}}
-                        <div class="flex-shrink-0 w-32 md:w-48 flex justify-center items-center">
+                        <div class="flex-shrink-0 w-32 md:w-48 flex justify-center items-center group">
                             <img src="{{ $client->logo }}" 
                                  class="h-12 md:h-16 w-auto object-contain hover:scale-110 transition-transform duration-300 cursor-pointer" 
                                  alt="{{ $client->name }}">
                         </div>
                     @endforeach
-                @endfor
+                    {{-- SET 2 (Clone) --}}
+                    @foreach($clients->reverse() as $client)
+                        <div class="flex-shrink-0 w-32 md:w-48 flex justify-center items-center group">
+                            <img src="{{ $client->logo }}" 
+                                 class="h-12 md:h-16 w-auto object-contain hover:scale-110 transition-transform duration-300 cursor-pointer" 
+                                 alt="{{ $client->name }}">
+                        </div>
+                    @endforeach
+                </div>
             </div>
 
         </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const speed = 50; 
+                const containers = document.querySelectorAll('.js-scroll-container');
+                containers.forEach(container => {
+                    const totalWidth = container.scrollWidth;
+                    const distance = totalWidth / 2; 
+                    let duration = distance / speed;
+                    if (!duration || duration < 10) duration = 20;
+                    container.style.setProperty('--scroll-duration', `${duration}s`);
+                });
+            });
+        </script>
     </div>
-</div>
 
     {{-- 6. OUR GOALS SECTION --}}
     <div class="bg-[#001D5E] py-24 relative overflow-hidden">
@@ -641,7 +664,6 @@
 
        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
            <div class="flex flex-col lg:flex-row items-start gap-12 lg:gap-20">
-               {{-- Kiri: Gambar Proporsional --}}
                <div class="w-full lg:w-5/12 mb-12 lg:mb-0 relative sticky top-24">
                    <div class="absolute -inset-4 bg-gradient-to-r from-[#F7941D] to-yellow-500 rounded-[2rem] opacity-30 blur-lg"></div>
                    <img 
@@ -653,7 +675,6 @@
                    </div>
                </div>
 
-               {{-- Kanan: Teks --}}
                <div class="w-full lg:w-6/12 text-white">
                    <span class="text-[#F7941D] font-bold tracking-widest uppercase text-sm mb-2 block">Our Goals</span>
                    <h2 class="text-3xl md:text-4xl font-bold mb-8 leading-tight">Misi Utama <span class="text-[#F7941D]">Stukka</span></h2>
@@ -698,17 +719,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!carousel || !track) return;
 
     const totalOriginal = {{ $tCount }};
-    if (totalOriginal <= 3) return; // kalau <= 3, stop (tidak perlu geser)
+    if (totalOriginal <= 3) return; 
 
     let index = 0;
     let perView = getPerView();
-    let step = 0;
 
     function getPerView() {
         const w = window.innerWidth;
-        if (w >= 1024) return 3; // lg
-        if (w >= 768) return 2;  // md
-        return 1;                // mobile
+        if (w >= 1024) return 3; 
+        if (w >= 768) return 2;  
+        return 1;                
     }
 
     function slideTo(i, withTransition = true) {
@@ -722,9 +742,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function buildDots() {
         const dotsWrap = document.getElementById('testi-dots');
         if (!dotsWrap) return;
-
-        // jumlah step = totalOriginal (geser 1 kartu per step), tapi untuk UX cukup batasi:
-        // kita buat dots berdasarkan totalOriginal (boleh kamu ubah jadi Math.ceil(totalOriginal/perView))
         dotsWrap.innerHTML = '';
         for (let i = 0; i < totalOriginal; i++) {
             const b = document.createElement('button');
@@ -748,25 +765,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     let timer = null;
-
     function start() {
         stop();
         timer = setInterval(() => {
             index++;
             slideTo(index, true);
             paintDots();
-        }, 3500); // kecepatan geser
+        }, 3500);
     }
-
     function stop() {
         if (timer) clearInterval(timer);
         timer = null;
     }
 
-    // Loop handling: karena kita clone 3 item, pas index mencapai totalOriginal (atau lebih),
-    // kita reset tanpa transisi biar seamless.
     track.addEventListener('transitionend', () => {
-        // ketika sudah lewat item asli dan masuk area clone
         if (index >= totalOriginal) {
             index = 0;
             slideTo(index, false);
@@ -774,13 +786,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Responsive: update perView saat resize
     window.addEventListener('resize', () => {
         perView = getPerView();
         slideTo(index, false);
     });
 
-    // Pause on hover (biar enak)
     carousel.addEventListener('mouseenter', stop);
     carousel.addEventListener('mouseleave', start);
 
